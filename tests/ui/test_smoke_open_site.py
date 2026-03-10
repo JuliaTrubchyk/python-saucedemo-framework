@@ -1,7 +1,9 @@
+import pytest
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
 
 
+@pytest.mark.smoke
 def test_login_success(driver):
     driver.get("https://www.saucedemo.com/")
 
