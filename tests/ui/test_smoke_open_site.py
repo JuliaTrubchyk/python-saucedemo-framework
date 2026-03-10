@@ -1,5 +1,5 @@
+from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
-from selenium.webdriver.common.by import By
 
 
 def test_login_success(driver):
@@ -8,5 +8,6 @@ def test_login_success(driver):
     login_page = LoginPage(driver)
     login_page.login("standard_user", "secret_sauce")
 
-    page_title = driver.find_element(By.CLASS_NAME, "title").text
+    inventory_page = InventoryPage(driver)
+    page_title = inventory_page.get_page_title()
     assert page_title == "Products"
