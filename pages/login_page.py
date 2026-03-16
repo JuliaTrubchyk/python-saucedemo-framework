@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from pages.inventory_page import InventoryPage
 
 
 class LoginPage(BasePage):
@@ -19,6 +20,10 @@ class LoginPage(BasePage):
 
         # Click login button
         self.click(self.LOGIN_BUTTON)
+
+        return InventoryPage(self.driver)
+
+
 
     # Page data
     def get_error_message(self):
