@@ -5,10 +5,15 @@ from pages.inventory_page import InventoryPage
 
 class LoginPage(BasePage):
     # Locators
+    BASE_URL = "https://www.saucedemo.com/"
+
     USERNAME_INPUT = (By.ID, "user-name")
     PASSWORD_INPUT = (By.ID, "password")
     LOGIN_BUTTON = (By.ID, "login-button")
     ERROR_MESSAGE = (By.CSS_SELECTOR, "[data-test='error']")
+
+    def open(self):
+        self.driver.get(self.BASE_URL)
 
     # Actions
     def login(self, username, password):
