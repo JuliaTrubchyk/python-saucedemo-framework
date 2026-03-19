@@ -13,6 +13,16 @@ def test_login_success(driver):
     assert page_title == "Products"
 
 @pytest.mark.regression
+def test_inventory_items_are_displayed_after_login(driver):
+    login_page = LoginPage(driver)
+    login_page.open()
+
+    inventory_page = login_page.login("standard_user", "secret_sauce")
+
+    items_count = inventory_page.get_inventory_items_count()
+    assert items_count > 0
+
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "username,password,expected_error",
     [
