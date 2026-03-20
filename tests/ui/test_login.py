@@ -1,5 +1,7 @@
 import pytest
 from pages.login_page import LoginPage
+from pages.inventory_page import InventoryPage
+from pages.cart_page import CartPage
 
 
 @pytest.mark.smoke
@@ -32,6 +34,20 @@ def test_add_item_to_cart_updates_cart_badge(driver):
 
     cart_count = inventory_page.get_cart_badge_count()
     assert cart_count == "1"
+
+@pytest.mark.regression
+def test_cart_contains_added_item(driver):
+    login_page = LoginPage(driver)
+    login_page.open()
+
+    inventory_page = login_page.login("standard_user", "secret_sauce")
+    inventory_page.add_backpack_to_cart()
+
+    cart_page = inventory_page.open_cart_page()
+    item_count = cart_page.get_cart_item_count()
+
+    assert item_count == 1
+
 
 @pytest.mark.regression
 @pytest.mark.parametrize(
