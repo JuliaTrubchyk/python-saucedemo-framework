@@ -23,6 +23,17 @@ def test_inventory_items_are_displayed_after_login(driver):
     assert items_count > 0
 
 @pytest.mark.regression
+def test_add_item_to_cart_updates_cart_badge(driver):
+    login_page = LoginPage(driver)
+    login_page.open()
+
+    inventory_page = login_page.login("standard_user", "secret_sauce")
+    inventory_page.add_backpack_to_cart()
+
+    cart_count = inventory_page.get_cart_badge_count()
+    assert cart_count == "1"
+
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "username,password,expected_error",
     [
@@ -32,6 +43,7 @@ def test_inventory_items_are_displayed_after_login(driver):
         ("locked_out_user", "secret_sauce", "Sorry, this user has been locked out"),
     ]
 )
+
 def test_login_negative_cases(driver, username, password, expected_error):
     login_page = LoginPage(driver)
     login_page.open()
