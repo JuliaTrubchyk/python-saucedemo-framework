@@ -14,6 +14,7 @@ def test_login_success(driver):
     page_title = inventory_page.get_page_title()
     assert page_title == "Products"
 
+
 @pytest.mark.regression
 def test_inventory_items_are_displayed_after_login(driver):
     login_page = LoginPage(driver)
@@ -45,9 +46,10 @@ def test_cart_contains_added_item(driver):
 
     cart_page = inventory_page.open_cart_page()
     item_count = cart_page.get_cart_item_count()
+    item_name = cart_page.get_cart_item_name()
 
     assert item_count == 1
-
+    assert "Sauce Labs Backpack" in item_name
 
 @pytest.mark.regression
 @pytest.mark.parametrize(
