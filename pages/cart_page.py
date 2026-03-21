@@ -4,6 +4,7 @@ from pages.base_page import BasePage
 class CartPage(BasePage):
     CART_ITEM = (By.CLASS_NAME, "cart_item")
     CART_ITEM_NAME = (By.CLASS_NAME, "inventory_item_name")
+    REMOVE_BACKPACK_BUTTON = (By.ID, "remove-sauce-labs-backpack")
     CART_LIST = (By.CLASS_NAME, "cart_list")
 
     def get_cart_item_count(self):
@@ -12,4 +13,7 @@ class CartPage(BasePage):
 
     def get_cart_item_name(self):
         return self.get_text(self.CART_ITEM_NAME)
+
+    def remove_backpack_from_cart(self):
+        self.click(self.REMOVE_BACKPACK_BUTTON)
 

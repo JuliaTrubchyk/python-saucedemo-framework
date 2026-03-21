@@ -52,6 +52,20 @@ def test_cart_contains_added_item(driver):
     assert "Sauce Labs Backpack" in item_name
 
 @pytest.mark.regression
+def test_remove_item_from_cart(driver):
+    login_page = LoginPage(driver)
+    login_page.open()
+
+    inventory_page = login_page.login("standard_user", "secret_sauce")
+    inventory_page.add_backpack_to_cart()
+
+    cart_page = inventory_page.open_cart_page()
+    cart_page.remove_backpack_from_cart()
+
+    item_count = cart_page.get_cart_item_count()
+    assert item_count == 0
+
+@pytest.mark.regression
 @pytest.mark.parametrize(
     "username,password,expected_error",
     [
