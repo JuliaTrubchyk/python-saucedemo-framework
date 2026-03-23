@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from pages.checkout_overview_page import CheckoutOverviewPage
+
 
 class CheckoutPage(BasePage):
     PAGE_TITLE = (By.CLASS_NAME, "title")
@@ -18,3 +20,4 @@ class CheckoutPage(BasePage):
 
     def continue_checkout(self):
         self.click(self.CONTINUE_BUTTON)
+        return CheckoutOverviewPage(self.driver)

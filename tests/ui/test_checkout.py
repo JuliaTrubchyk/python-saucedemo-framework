@@ -29,7 +29,7 @@ def test_user_can_fill_checkout_information_and_continue(driver):
     checkout_page = cart_page.checkout()
 
     checkout_page.fill_checkout_information("John", "Doe", "12345")
-    checkout_page.continue_checkout()
+    overview_page = checkout_page.continue_checkout()
 
-    page_title = checkout_page.get_page_title()
+    page_title = overview_page.get_page_title()
     assert page_title == "Checkout: Overview"
