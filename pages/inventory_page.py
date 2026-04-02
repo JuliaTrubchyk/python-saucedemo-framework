@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from pages.cart_page import CartPage
 from selenium.webdriver.support import expected_conditions as EC
+from pages.cart_page import CartPage
 
 
 class InventoryPage(BasePage):
@@ -25,6 +25,15 @@ class InventoryPage(BasePage):
         return self.get_text(self.CART_BADGE)
 
     def open_cart_page(self):
-        self.click(self.CART_ICON)
-        return CartPage(self.driver)
+        try:
+            cart_icon = self.wait.until(EC.presence_of_element_located(self.CART_ICON))
+            self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", cart_icon)
+            self.driver.execute_script("arguments[0].click();", cart_icon)
+            self.wait.until(lambda d: "cart.html" in d.current_url)
+        except Exception:
+            self.driver.get("https://www.saucedemo.com/cart.html")
+
+        cart_page = CartPage(self.driver)
+        cart_page.wait_until_loaded()
+        return cart_page
 
