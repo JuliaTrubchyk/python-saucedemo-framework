@@ -3,7 +3,6 @@ from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
 from pages.checkout_overview_page import CheckoutOverviewPage
 
-
 class CheckoutPage(BasePage):
     PAGE_TITLE = (By.CLASS_NAME, "title")
     FIRST_NAME_INPUT = (By.ID, "first-name")
@@ -21,9 +20,5 @@ class CheckoutPage(BasePage):
 
     def continue_checkout(self):
         self.click(self.CONTINUE_BUTTON)
-
-        overview_page = CheckoutOverviewPage(self.driver)
-        overview_page.wait.until(
-            EC.text_to_be_present_in_element(overview_page.PAGE_TITLE, "Checkout: Overview")
-        )
-        return overview_page
+        self.wait.until(EC.url_contains("checkout-step-two.html"))
+        return CheckoutOverviewPage(self.driver)

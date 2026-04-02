@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
-from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
+from pages.base_page import BasePage
 from pages.checkout_page import CheckoutPage
 
 
@@ -16,23 +16,19 @@ class CartPage(BasePage):
 
     def get_cart_item_count(self):
         self.wait_until_loaded()
-        cart_items = self.driver.find_elements(*self.CART_ITEM)
-        return len(cart_items)
+        return len(self.driver.find_elements(*self.CART_ITEM))
 
     def get_cart_item_name(self):
         return self.get_text(self.CART_ITEM_NAME)
 
     def remove_backpack_from_cart(self):
+        self.wait_until_loaded()
         self.click(self.REMOVE_BACKPACK_BUTTON)
-        self.wait.until(lambda d: len(d.find_elements(*self.CART_ITEM)) == 0)
+        self.wait.until(EC.invisibility_of_element_located(self.REMOVE_BACKPACK_BUTTON))
 
     def checkout(self):
         self.wait_until_loaded()
         self.click(self.CHECKOUT_BUTTON)
-
-        checkout_page = CheckoutPage(self.driver)
-        checkout_page.wait.until(
-            EC.text_to_be_present_in_element(checkout_page.PAGE_TITLE, "Checkout: Your Information")
-        )
-        return checkout_page
+        self.wait.until(EC.url_contains("checkout-step-one.html"))
+        return CheckoutPage(self.driver)
 
