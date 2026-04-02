@@ -24,9 +24,15 @@ class CartPage(BasePage):
 
     def remove_backpack_from_cart(self):
         self.click(self.REMOVE_BACKPACK_BUTTON)
+        self.wait.until(lambda d: len(d.find_elements(*self.CART_ITEM)) == 0)
 
     def checkout(self):
         self.wait_until_loaded()
         self.click(self.CHECKOUT_BUTTON)
-        return CheckoutPage(self.driver)
+
+        checkout_page = CheckoutPage(self.driver)
+        checkout_page.wait.until(
+            EC.presence_of_element_located(checkout_page.FIRST_NAME_INPUT)
+        )
+        return checkout_page
 

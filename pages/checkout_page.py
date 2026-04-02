@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.checkout_overview_page import CheckoutOverviewPage
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class CheckoutPage(BasePage):
@@ -20,4 +21,9 @@ class CheckoutPage(BasePage):
 
     def continue_checkout(self):
         self.click(self.CONTINUE_BUTTON)
-        return CheckoutOverviewPage(self.driver)
+
+        overview_page = CheckoutOverviewPage(self.driver)
+        overview_page.wait.until(
+            EC.presence_of_element_located(overview_page.FINISH_BUTTON)
+        )
+        return overview_page
