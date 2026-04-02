@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from pages.checkout_complete_page import CheckoutCompletePage
 from selenium.webdriver.support import expected_conditions as EC
+from pages.checkout_complete_page import CheckoutCompletePage
 
 class CheckoutOverviewPage(BasePage):
     PAGE_TITLE = (By.CLASS_NAME, "title")
@@ -15,6 +15,6 @@ class CheckoutOverviewPage(BasePage):
 
         complete_page = CheckoutCompletePage(self.driver)
         complete_page.wait.until(
-            EC.presence_of_element_located(complete_page.COMPLETE_HEADER)
+            EC.text_to_be_present_in_element(complete_page.COMPLETE_HEADER, "Thank you for your order!")
         )
         return complete_page

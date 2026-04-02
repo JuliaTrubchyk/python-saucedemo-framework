@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from pages.checkout_page import CheckoutPage
 from selenium.webdriver.support import expected_conditions as EC
+from pages.checkout_page import CheckoutPage
 
 
 class CartPage(BasePage):
@@ -32,7 +32,7 @@ class CartPage(BasePage):
 
         checkout_page = CheckoutPage(self.driver)
         checkout_page.wait.until(
-            EC.presence_of_element_located(checkout_page.FIRST_NAME_INPUT)
+            EC.text_to_be_present_in_element(checkout_page.PAGE_TITLE, "Checkout: Your Information")
         )
         return checkout_page
 

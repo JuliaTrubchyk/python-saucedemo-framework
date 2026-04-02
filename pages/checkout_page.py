@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from pages.checkout_overview_page import CheckoutOverviewPage
 from selenium.webdriver.support import expected_conditions as EC
+from pages.checkout_overview_page import CheckoutOverviewPage
 
 
 class CheckoutPage(BasePage):
@@ -24,6 +24,6 @@ class CheckoutPage(BasePage):
 
         overview_page = CheckoutOverviewPage(self.driver)
         overview_page.wait.until(
-            EC.presence_of_element_located(overview_page.FINISH_BUTTON)
+            EC.text_to_be_present_in_element(overview_page.PAGE_TITLE, "Checkout: Overview")
         )
         return overview_page
