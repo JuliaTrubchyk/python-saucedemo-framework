@@ -24,7 +24,7 @@ jobs:
 
       - name: Run tests
         run: |
-          HEADLESS=true pytest
+          vfb-run -a pytest -vv
 
       - name: Upload screenshots on failure
         if: always()
