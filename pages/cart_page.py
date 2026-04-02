@@ -28,11 +28,16 @@ class CartPage(BasePage):
 
     def checkout(self):
         self.wait_until_loaded()
-        self.click(self.CHECKOUT_BUTTON)
+
+        button = self.wait.until(EC.element_to_be_clickable(self.CHECKOUT_BUTTON))
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", button)
+        self.driver.execute_script("arguments[0].click();", button)
 
         checkout_page = CheckoutPage(self.driver)
+        checkout_page.wait.until(EC.url_contains("checkout-step-one.html"))
         checkout_page.wait.until(
-            EC.element_to_be_clickable(checkout_page.FIRST_NAME_INPUT)
+            EC.presence_of_element_located(checkout_page.FIRST_NAME_INPUT)
         )
+
         return checkout_page
 
