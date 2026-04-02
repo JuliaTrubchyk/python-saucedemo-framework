@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.checkout_page import CheckoutPage
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class CartPage(BasePage):
@@ -10,7 +11,11 @@ class CartPage(BasePage):
     CART_LIST = (By.CLASS_NAME, "cart_list")
     CHECKOUT_BUTTON = (By.ID, "checkout")
 
+    def wait_until_loaded(self):
+        self.wait.until(EC.visibility_of_element_located(self.CART_LIST))
+
     def get_cart_item_count(self):
+        self.wait_until_loaded()
         cart_items = self.driver.find_elements(*self.CART_ITEM)
         return len(cart_items)
 
@@ -21,6 +26,7 @@ class CartPage(BasePage):
         self.click(self.REMOVE_BACKPACK_BUTTON)
 
     def checkout(self):
+        self.wait_until_loaded()
         self.click(self.CHECKOUT_BUTTON)
         return CheckoutPage(self.driver)
 

@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.cart_page import CartPage
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class InventoryPage(BasePage):
@@ -18,6 +19,7 @@ class InventoryPage(BasePage):
 
     def add_backpack_to_cart(self):
         self.click(self.ADD_BACKPACK_TO_CART_BUTTON)
+        self.wait.until(EC.visibility_of_element_located(self.CART_BADGE))
 
     def get_cart_badge_count(self):
         return self.get_text(self.CART_BADGE)
