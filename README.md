@@ -11,6 +11,16 @@ It demonstrates a complete end-to-end testing flow for the SauceDemo application
 
 ---
 
+## 💪 Key Highlights
+
+- Built stable UI automation framework using Selenium + pytest
+- Designed Page Object Model (POM) from scratch
+- Integrated GitHub Actions CI with headless execution
+- Implemented screenshot capture on failure
+- Debugged and fixed flaky tests using HTML + screenshot artifacts
+
+---
+
 ## 🚀 Tech Stack
 
 - Python
