@@ -10,20 +10,25 @@ def driver():
 
     headless = os.getenv("HEADLESS") == "true"
 
+    # Reduce browser noise / popups
+    options.add_experimental_option(
+        "prefs",
+        {
+            "credentials_enable_service": False,
+            "profile.password_manager_enabled": False,
+        },
+    )
+    options.add_argument("--disable-notifications")
+
     if headless:
         options.add_argument("--headless=new")
         options.add_argument("--disable-gpu")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
 
-    # Create driver
     driver = webdriver.Chrome(options=options)
-
-    # Set consistent window size for both local and CI
     driver.set_window_size(1920, 1080)
 
-    # Provide driver to tests
     yield driver
 
-    # Teardown
     driver.quit()
