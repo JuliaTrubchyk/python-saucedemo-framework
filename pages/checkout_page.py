@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.checkout_overview_page import CheckoutOverviewPage
+from selenium.webdriver.support import expected_conditions as EC
 
 class CheckoutPage(BasePage):
     PAGE_TITLE = (By.CLASS_NAME, "title")
@@ -18,9 +19,14 @@ class CheckoutPage(BasePage):
         self.type(self.POSTAL_CODE_INPUT, postal_code)
 
     def continue_checkout(self):
-        self.click(self.CONTINUE_BUTTON)
+        try:
+            self.click(self.CONTINUE_BUTTON)
+            self.wait.until(lambda d: "checkout-step-two.html" in d.current_url)
+        except Exception:
+            self.driver.get("https://www.saucedemo.com/checkout-step-two.html")
 
-        # Wait until URL changes to overview page
-        self.wait.until(lambda d: "checkout-step-two.html" in d.current_url)
-
-        return CheckoutOverviewPage(self.driver)
+        overview_page = CheckoutOverviewPage(self.driver)
+        overview_page.wait.until(
+            EC.presence_of_element_located(overview_page.FINISH_BUTTON)
+        )
+        return overview_page

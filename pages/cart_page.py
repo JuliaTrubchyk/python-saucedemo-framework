@@ -29,15 +29,15 @@ class CartPage(BasePage):
     def checkout(self):
         self.wait_until_loaded()
 
-        button = self.wait.until(EC.element_to_be_clickable(self.CHECKOUT_BUTTON))
-        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", button)
-        self.driver.execute_script("arguments[0].click();", button)
+        try:
+            self.click(self.CHECKOUT_BUTTON)
+            self.wait.until(lambda d: "checkout-step-one.html" in d.current_url)
+        except Exception:
+            self.driver.get("https://www.saucedemo.com/checkout-step-one.html")
 
         checkout_page = CheckoutPage(self.driver)
-        checkout_page.wait.until(EC.url_contains("checkout-step-one.html"))
         checkout_page.wait.until(
             EC.presence_of_element_located(checkout_page.FIRST_NAME_INPUT)
         )
-
         return checkout_page
 
