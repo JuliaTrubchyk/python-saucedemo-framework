@@ -1,15 +1,27 @@
 import os
 from datetime import datetime
-
 import pytest
 from selenium import webdriver
-
+from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture
 def driver():
+    options = Options()
+
+    headless = os.getenv("HEADLESS") == "true"
+
+    # Check if HEADLESS mode is enabled
+    if headless:
+        options.add_argument("--headless")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--window-size=1920,1080")
+
     # Setup: create browser
-    driver = webdriver.Chrome()
-    driver.maximize_window()
+    driver = webdriver.Chrome(options=options)
+
+    # Only maximize in UI mode
+    if not headless:
+        driver.maximize_window()
 
     # Give the driver to the test
     yield driver
