@@ -1,6 +1,5 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from selenium.webdriver.support import expected_conditions as EC
 from pages.checkout_overview_page import CheckoutOverviewPage
 
 class CheckoutPage(BasePage):
@@ -20,5 +19,8 @@ class CheckoutPage(BasePage):
 
     def continue_checkout(self):
         self.click(self.CONTINUE_BUTTON)
-        self.wait.until(EC.url_contains("checkout-step-two.html"))
+
+        # Wait until URL changes to overview page
+        self.wait.until(lambda d: "checkout-step-two.html" in d.current_url)
+
         return CheckoutOverviewPage(self.driver)
