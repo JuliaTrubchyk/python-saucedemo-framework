@@ -1,3 +1,9 @@
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Selenium](https://img.shields.io/badge/Selenium-Automation-green)
+![pytest](https://img.shields.io/badge/pytest-Framework-orange)
+![Status](https://img.shields.io/badge/Tests-Passing-brightgreen)
+
+
 # Selenium Python Automation Framework (SauceDemo)
 
 This project is a UI automation framework built using **Selenium + Python + pytest**.  
