@@ -12,7 +12,7 @@ class CartPage(BasePage):
     CHECKOUT_BUTTON = (By.ID, "checkout")
 
     def wait_until_loaded(self):
-        self.wait.until(EC.visibility_of_element_located(self.CART_LIST))
+        self.wait.until(EC.presence_of_element_located(self.CART_LIST))
 
     def get_cart_item_count(self):
         self.wait_until_loaded()

@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from pages.inventory_page import InventoryPage
 from config import BASE_URL
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class LoginPage(BasePage):
@@ -15,16 +16,16 @@ class LoginPage(BasePage):
         self.driver.get(BASE_URL)
 
     # Actions
-    def login(self, username, password):
-        # Enter username
+    def submit_login(self, username, password):
         self.type(self.USERNAME_INPUT, username)
-
-        # Enter password
         self.type(self.PASSWORD_INPUT, password)
-
-        # Click login button
         self.click(self.LOGIN_BUTTON)
 
+    def login_expect_success(self, username, password):
+        self.submit_login(username, password)
+        self.wait.until(
+            EC.presence_of_element_located((By.CLASS_NAME, "inventory_list"))
+        )
         return InventoryPage(self.driver)
 
     # Page data

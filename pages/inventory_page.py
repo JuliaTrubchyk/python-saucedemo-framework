@@ -19,7 +19,7 @@ class InventoryPage(BasePage):
 
     def add_backpack_to_cart(self):
         self.click(self.ADD_BACKPACK_TO_CART_BUTTON)
-        self.wait.until(EC.visibility_of_element_located(self.CART_BADGE))
+        self.wait.until(EC.presence_of_element_located(self.CART_BADGE))
 
     def get_cart_badge_count(self):
         return self.get_text(self.CART_BADGE)

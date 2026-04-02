@@ -8,7 +8,7 @@ def test_login_success(driver):
     login_page = LoginPage(driver)
     login_page.open()
 
-    inventory_page = login_page.login(STANDARD_USERNAME, STANDARD_PASSWORD)
+    inventory_page = login_page.login_expect_success(STANDARD_USERNAME, STANDARD_PASSWORD)
 
     page_title = inventory_page.get_page_title()
     assert page_title == "Products"
@@ -19,7 +19,7 @@ def test_inventory_items_are_displayed_after_login(driver):
     login_page = LoginPage(driver)
     login_page.open()
 
-    inventory_page = login_page.login(STANDARD_USERNAME, STANDARD_PASSWORD)
+    inventory_page = login_page.login_expect_success(STANDARD_USERNAME, STANDARD_PASSWORD)
 
     items_count = inventory_page.get_inventory_items_count()
     assert items_count > 0
@@ -29,7 +29,7 @@ def test_add_item_to_cart_updates_cart_badge(driver):
     login_page = LoginPage(driver)
     login_page.open()
 
-    inventory_page = login_page.login(STANDARD_USERNAME, STANDARD_PASSWORD)
+    inventory_page = login_page.login_expect_success(STANDARD_USERNAME, STANDARD_PASSWORD)
     inventory_page.add_backpack_to_cart()
 
     cart_count = inventory_page.get_cart_badge_count()
@@ -40,7 +40,7 @@ def test_cart_contains_added_item(driver):
     login_page = LoginPage(driver)
     login_page.open()
 
-    inventory_page = login_page.login(STANDARD_USERNAME, STANDARD_PASSWORD)
+    inventory_page = login_page.login_expect_success(STANDARD_USERNAME, STANDARD_PASSWORD)
     inventory_page.add_backpack_to_cart()
 
     cart_page = inventory_page.open_cart_page()
@@ -55,7 +55,7 @@ def test_remove_item_from_cart(driver):
     login_page = LoginPage(driver)
     login_page.open()
 
-    inventory_page = login_page.login(STANDARD_USERNAME, STANDARD_PASSWORD)
+    inventory_page = login_page.login_expect_success(STANDARD_USERNAME, STANDARD_PASSWORD)
     inventory_page.add_backpack_to_cart()
 
     cart_page = inventory_page.open_cart_page()
@@ -78,7 +78,7 @@ def test_remove_item_from_cart(driver):
 def test_login_negative_cases(driver, username, password, expected_error):
     login_page = LoginPage(driver)
     login_page.open()
-    login_page.login(username, password)
+    login_page.submit_login(username, password)
 
     error_message = login_page.get_error_message()
     assert expected_error in error_message
