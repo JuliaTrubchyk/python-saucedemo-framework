@@ -122,3 +122,8 @@ pytest
 ## 📌 Notes
 
 This project is designed as a learning and portfolio project to demonstrate UI automation skills and framework design for QA automation roles.
+
+---
+
+## ⚙️ CI (GitHub Actions)
+Tests run automatically on every push using headless Chrome.
