@@ -1,5 +1,6 @@
 import pytest
 from pages.login_page import LoginPage
+from selenium.webdriver.common.by import By
 from config import STANDARD_USERNAME, STANDARD_PASSWORD
 
 
@@ -61,8 +62,8 @@ def test_remove_item_from_cart(driver):
     cart_page = inventory_page.open_cart_page()
     cart_page.remove_backpack_from_cart()
 
-    item_count = cart_page.get_cart_item_count()
-    assert item_count == 0
+    cart_badge = driver.find_elements(By.CLASS_NAME, "shopping_cart_badge")
+    assert len(cart_badge) == 0
 
 @pytest.mark.regression
 @pytest.mark.parametrize(

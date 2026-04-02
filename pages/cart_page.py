@@ -22,9 +22,11 @@ class CartPage(BasePage):
         return self.get_text(self.CART_ITEM_NAME)
 
     def remove_backpack_from_cart(self):
-        self.wait_until_loaded()
-        self.click(self.REMOVE_BACKPACK_BUTTON)
-        self.wait.until(EC.invisibility_of_element_located(self.REMOVE_BACKPACK_BUTTON))
+        button = self.wait.until(EC.presence_of_element_located(self.REMOVE_BACKPACK_BUTTON))
+        self.driver.execute_script("arguments[0].click();", button)
+
+        # Wait until cart badge disappears
+        self.wait.until(lambda d: len(d.find_elements(By.CLASS_NAME, "shopping_cart_badge")) == 0)
 
     def checkout(self):
         self.wait_until_loaded()
